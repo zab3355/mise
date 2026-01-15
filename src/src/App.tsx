@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -38,7 +38,6 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [provider, setProvider] = useState<string | undefined>();
   const [snackOpen, setSnackOpen] = useState(false);
-  const [snackMessage, setSnackMessage] = useState("");
 
   // Variants logic
   const availableVariants = useMemo<VariantKey[]>(() => {
@@ -80,6 +79,12 @@ function App() {
     }
   }, [form]);
 
+  useEffect(() => {
+    if (recipe && form.name.trim()) {
+      loadRecipe();
+    }
+  }, [form.servings]);
+
   // Handlers
   const handleNameChange = (value: string) => setForm(f => ({ ...f, name: value }));
   const handleServingsChange = (value: number) => setForm(f => ({ ...f, servings: value }));
@@ -98,7 +103,7 @@ function App() {
                   mise.
                 </Typography>
                 <Typography variant="h4">
-                  From prompt to plated — structured recipes, instantly.
+                  From prompt to on your plate, insert your dream dish here.
                 </Typography>
                 <Typography variant="body1" color="text.secondary">
                   Type any dish, pick servings, and flip between variants.
@@ -157,7 +162,7 @@ function App() {
                   ingredients={recipe.variants[variant]?.ingredients ?? []}
                 />
                 <Instructions
-                  steps={recipe.variants[variant]?.instructions ?? []}
+                  steps={recipe.instructions}
                 />
               </Section>
             </>
@@ -167,7 +172,6 @@ function App() {
             open={snackOpen}
             autoHideDuration={4000}
             onClose={() => setSnackOpen(false)}
-            message={snackMessage}
           />
         </PageContainer>
       </AppShell>

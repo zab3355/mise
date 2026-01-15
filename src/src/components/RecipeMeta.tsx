@@ -19,7 +19,7 @@ export const RecipeMeta = ({ recipe }: RecipeMetaProps) => (
     <Stack direction="row" spacing={1} flexWrap="wrap" gap={1} mt={1}>
       <Chip label={`${recipe.cookTimeMinutes} min`} color="primary" variant="outlined" />
       <Chip label={recipe.difficulty} variant="outlined" />
-      <Chip label={`servings: ${servings}`} variant="outlined" />
+      <Chip label={`servings: ${recipe.servings || 4}`} variant="outlined" />
     </Stack>
   </Box>
 );

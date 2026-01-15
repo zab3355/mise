@@ -6,7 +6,6 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import LanguageIcon from "@mui/icons-material/Language";
 
-
 export const Footer = () => (
   <Box
     component="footer"
@@ -20,58 +19,60 @@ export const Footer = () => (
     }}
   >
     <Stack direction="row" spacing={2} justifyContent="center" alignItems="center" mb={1}>
-      <FooterIconLink
-        href="https://github.com/zabrown"
-        label="GitHub"
-        icon={<GitHubIcon fontSize="medium" />}
-      />
-      <FooterIconLink
-        href="https://linkedin.com/in/zabrown"
-        label="LinkedIn"
-        icon={<LinkedInIcon fontSize="medium" />}
-      />
-      <FooterIconLink
+      <Link
+        href="https://github.com/zab3355"
+        target="_blank"
+        rel="noopener"
+        aria-label="GitHub"
+        color="inherit"
+        sx={{
+          display: "inline-flex",
+          transition: "all 0.2s ease-in-out",
+          "&:hover": {
+            color: "primary.main",
+            transform: "scale(1.1)",
+          },
+        }}
+      >
+        <GitHubIcon fontSize="medium" />
+      </Link>
+      <Link
+        href="https://www.linkedin.com/in/zab3355/"
+        target="_blank"
+        rel="noopener"
+        aria-label="LinkedIn"
+        color="inherit"
+        sx={{
+          display: "inline-flex",
+          transition: "all 0.2s ease-in-out",
+          "&:hover": {
+            color: "primary.main",
+            transform: "scale(1.1)",
+          },
+        }}
+      >
+        <LinkedInIcon fontSize="medium" />
+      </Link>
+      <Link
         href="https://zabrown.com"
-        label="Portfolio"
-        icon={<LanguageIcon fontSize="medium" />}
-      />
+        target="_blank"
+        rel="noopener"
+        aria-label="Portfolio"
+        color="inherit"
+        sx={{
+          display: "inline-flex",
+          transition: "all 0.2s ease-in-out",
+          "&:hover": {
+            color: "primary.main",
+            transform: "scale(1.1)",
+          },
+        }}
+      >
+        <LanguageIcon fontSize="medium" />
+      </Link>
     </Stack>
     <Typography variant="body2" color="text.secondary">
-      © {new Date().getFullYear()} Zach Brown &mdash; mise.
+      {new Date().getFullYear()} Zach Brown &mdash; mise.
     </Typography>
   </Box>
 );
-
-import { useTheme } from "@mui/material/styles";
-
-interface FooterIconLinkProps {
-  href: string;
-  label: string;
-  icon: React.ReactNode;
-}
-
-const FooterIconLink: React.FC<FooterIconLinkProps> = ({ href, label, icon }) => {
-  const theme = useTheme();
-  return (
-    <Link
-      href={href}
-      target="_blank"
-      rel="noopener"
-      aria-label={label}
-      color="inherit"
-      sx={{
-        display: "inline-flex",
-        alignItems: "center",
-        transition: theme.transitions.create(["transform", "color"], {
-          duration: theme.transitions.duration.short,
-        }),
-        '&:hover': {
-          color: theme.palette.primary.main,
-          transform: 'scale(1.13)',
-        },
-      }}
-    >
-      {icon}
-    </Link>
-  );
-};

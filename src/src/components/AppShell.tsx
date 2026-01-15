@@ -1,23 +1,21 @@
-import React from 'react';
 import { Box } from '@mui/material';
+import { type ReactNode } from 'react';
 
 interface AppShellProps {
-  children: React.ReactNode;
-  footer: React.ReactNode;
+  children: ReactNode;
+  footer: ReactNode;
 }
 
-export const AppShell: React.FC<AppShellProps> = ({ children, footer }) => {
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-        backgroundColor: 'background.default',
-      }}
-    >
-      <Box sx={{ flexGrow: 1 }}>{children}</Box>
-      {footer}
-    </Box>
-  );
-};
+export const AppShell = ({ children, footer }: AppShellProps) => (
+  <Box
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh',
+      backgroundColor: 'background.default',
+    }}
+  >
+    <Box sx={{ flexGrow: 1 }}>{children}</Box>
+    {footer}
+  </Box>
+);

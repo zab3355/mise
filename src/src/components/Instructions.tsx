@@ -23,22 +23,32 @@ export const Instructions = ({ steps }: InstructionsProps) => (
         <Box key={step.step}>
           <ListItem alignItems="flex-start" disableGutters>
             <Box
+              className="gradient-step-number"
               sx={{
-                width: 28,
-                height: 28,
+                width: 32,
+                height: 32,
+                minWidth: 32,
+                minHeight: 32,
                 borderRadius: "50%",
-                border: "1px solid",
-                borderColor: "divider",
-                display: "grid",
-                placeItems: "center",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
                 fontWeight: 700,
-                mr: 1.5,
-                mt: 0.5
+                fontSize: "0.875rem",
+                flexShrink: 0,
+                mr: 2,
+                mt: 0.25,
               }}
             >
               {step.step}
             </Box>
-            <ListItemText primary={step.text} />
+            <ListItemText
+              primary={step.text}
+              primaryTypographyProps={{
+                variant: "body1",
+                sx: { lineHeight: 1.7 }
+              }}
+            />
           </ListItem>
           {index < steps.length - 1 && <Divider sx={{ ml: 5 }} />}
         </Box>

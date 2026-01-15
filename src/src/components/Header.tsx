@@ -10,29 +10,38 @@ interface HeaderProps {
 
 export const Header = ({ provider }: HeaderProps) => {
   return (
-    <AppBar position="static" color="transparent" elevation={0} sx={{ mb: 3 }}>
+    <AppBar position="static" color="transparent" elevation={0} sx={{ mb: 4 }}>
       <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
         <Box display="flex" alignItems="center" gap={1.5}>
           <Box
+            className="gradient-badge"
             sx={{
-              width: 36,
-              height: 36,
+              width: 40,
+              height: 40,
               borderRadius: 2,
-              background: "linear-gradient(135deg, #111827, #1f2937)",
               display: "grid",
               placeItems: "center",
-              color: "white",
-              fontWeight: 700,
-              fontSize: 16
+              fontWeight: 800,
+              fontSize: 18,
             }}
           >
             m
           </Box>
-          <Typography variant="h5" fontWeight={700} letterSpacing={0.5}>
+          <Typography variant="h5" fontWeight={700} letterSpacing={-0.5}>
             mise.
           </Typography>
         </Box>
-        {provider && <Chip size="small" label={`provider: ${provider}`} sx={{ backgroundColor: "#111827", color: "#f8fafc" }} />}
+        {provider && (
+          <Chip
+            size="small"
+            label={`⚡ ${provider}`}
+            sx={{
+              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+              color: "#fff",
+              fontWeight: 600,
+            }}
+          />
+        )}
       </Toolbar>
     </AppBar>
   );

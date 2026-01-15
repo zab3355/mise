@@ -14,23 +14,32 @@ export const IngredientsTable = ({ ingredients }: IngredientsTableProps) => (
   <Table size="small" aria-label="ingredients">
     <TableHead>
       <TableRow>
-        <TableCell>
-          <Typography variant="subtitle2" color="text.secondary">
+        <TableCell sx={{ py: 1.5 }}>
+          <Typography variant="subtitle2" fontWeight={600} color="text.secondary">
             Ingredient
           </Typography>
         </TableCell>
-        <TableCell width={160} align="right">
-          <Typography variant="subtitle2" color="text.secondary">
+        <TableCell width={160} align="right" sx={{ py: 1.5 }}>
+          <Typography variant="subtitle2" fontWeight={600} color="text.secondary">
             Amount
           </Typography>
         </TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
-      {ingredients.map((ingredient) => (
-        <TableRow key={`${ingredient.name}-${ingredient.unit}`}>
-          <TableCell>{ingredient.name}</TableCell>
-          <TableCell align="right">
+      {ingredients.map((ingredient, idx) => (
+        <TableRow
+          key={`${ingredient.name}-${ingredient.unit}`}
+          sx={{
+            "&:hover": {
+              bgcolor: "action.hover",
+            },
+            bgcolor: idx % 2 === 0 ? "transparent" : "action.hover",
+            transition: "background-color 0.2s ease",
+          }}
+        >
+          <TableCell sx={{ py: 1.5 }}>{ingredient.name}</TableCell>
+          <TableCell align="right" sx={{ py: 1.5 }}>
             {ingredient.quantity} {ingredient.unit}
           </TableCell>
         </TableRow>

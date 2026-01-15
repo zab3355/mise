@@ -13,8 +13,7 @@ export const InstructionStepSchema = z.object({
 });
 
 export const RecipeVariantSchema = z.object({
-  ingredients: z.array(IngredientSchema),
-  instructions: z.array(InstructionStepSchema).optional()
+  ingredients: z.array(IngredientSchema)
 });
 
 export const RecipeSchema = z.object({
@@ -29,6 +28,7 @@ export const RecipeSchema = z.object({
     vegan: RecipeVariantSchema.optional(),
     glutenFree: RecipeVariantSchema.optional()
   }),
+  instructions: z.array(InstructionStepSchema),
   image: z.object({
     alt: z.string(),
     prompt: z.string()
@@ -51,3 +51,8 @@ export type RecipeVariant = z.infer<typeof RecipeVariantSchema>;
 export type Recipe = z.infer<typeof RecipeSchema>;
 export type RecipeResponse = z.infer<typeof RecipeResponseSchema>;
 export type VariantKey = keyof Recipe["variants"];
+
+export interface ImageResponse {
+  url: string | null;
+}
+

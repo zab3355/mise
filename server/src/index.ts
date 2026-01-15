@@ -44,24 +44,39 @@ app.post("/api/recipe", async (req, res) => {
 });
 
 
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
+
 const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
-const imageCache = new Map();
+const imageCache = new Map<string, string>();
 
 app.post("/api/image", async (req, res) => {
   try {
     const { prompt } = req.body;
     if (!prompt) return res.status(400).json({ error: "Missing prompt" });
+
+    // Return cached image if available
     if (imageCache.has(prompt)) {
       return res.json({ url: imageCache.get(prompt) });
     }
+
+    // Check if Unsplash key is configured
+    if (!UNSPLASH_ACCESS_KEY) {
+      console.warn("UNSPLASH_ACCESS_KEY not configured, returning null");
+      return res.json({ url: null });
+    }
+
     const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(prompt)}&per_page=1&orientation=landscape&client_id=${UNSPLASH_ACCESS_KEY}`;
     const response = await fetch(url);
-    const data = await response.json();
+    const data: any = await response.json();
     const imageUrl = data?.results?.[0]?.urls?.regular || null;
-    if (imageUrl) imageCache.set(prompt, imageUrl);
+
+    if (imageUrl) {
+      imageCache.set(prompt, imageUrl);
+    }
+
     res.json({ url: imageUrl });
   } catch (err) {
+    console.error("Image fetch error:", err);
     res.status(500).json({ url: null });
   }
 });

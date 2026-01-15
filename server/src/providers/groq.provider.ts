@@ -44,7 +44,8 @@ Return JSON with:
     "image": { "alt": string, "prompt": string }
   }
 }
-If the request is NOT food/recipe-related, set isRecipe=false and explain briefly in reason. If it is a recipe, set isRecipe=true and include the full recipe object. Quantities must be per-serving so they can be scaled. Return ONLY JSON, no prose. Do not include trailing commas. Do NOT include servingsSupported in the output.
+
+If the request is NOT food/recipe-related, set isRecipe=false and explain in reason. If it is a recipe, set isRecipe=true and include the full recipe object. Quantities must be per-serving so they can be scaled. Return ONLY JSON, no prose.
     `.trim();
 
     const messages = [
@@ -62,17 +63,21 @@ If the request is NOT food/recipe-related, set isRecipe=false and explain briefl
         const content = await this.chat(messages, { temperature: 0.1, max_tokens: 800 });
         lastRawContent = content;
         const jsonBlock = extractJsonBlock(stripJsonFence(content).trim());
-        if (!jsonBlock) throw new Error("No JSON found in model output.");
-        // Normalize nulls to undefined before Zod validation
+
+        if (!jsonBlock) {
+          throw new Error("No JSON found in model output");
+        }
+
         const normalized = normalizeNullsToUndefined(JSON.parse(jsonBlock));
         combined = CombinedSchema.parse(normalized);
         break;
       } catch (error) {
         lastError = error instanceof Error ? error : new Error("Unknown parse error");
+
         if (attempt === 0 && lastRawContent) {
           messages.push({
             role: "user",
-            content: `The previous response was not valid JSON or contained nulls. Please repair and return ONLY valid JSON. Do NOT use null for any field. Here is the broken output:\n\n${lastRawContent}`
+            content: `Invalid JSON response. Please return ONLY valid JSON without null values. Previous output:\n\n${lastRawContent}`
           });
         }
       }

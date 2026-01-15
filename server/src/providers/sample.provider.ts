@@ -1,5 +1,5 @@
 import { Recipe, RecipeRequest, RecipeSchema } from "../recipe.schema";
-import { ProviderName, RecipeProvider } from "./types";
+import { RecipeProvider } from "./types";
 
 type Profile = {
   cuisine: string;
@@ -58,7 +58,7 @@ const PROFILES: Profile[] = [
 const toTitleCase = (value: string) => value.replace(/\b\w/g, (c) => c.toUpperCase());
 
 export class SampleProvider implements RecipeProvider {
-  name: ProviderName = "sample";
+  name = "sample";
 
   async generateRecipe(request: RecipeRequest): Promise<Recipe> {
     const title = request.name.trim().length ? toTitleCase(request.name.trim()) : "Chef's Choice";
@@ -107,7 +107,7 @@ export class SampleProvider implements RecipeProvider {
       description: `${profile.cuisine}-leaning take: ${profile.description}. Built to scale for weeknight cooking.`,
       cookTimeMinutes: 30,
       difficulty: "Medium",
-      servingsSupported: [1, 2, 3, 4],
+      servings: 4,
       variants: {
         base: { ingredients: baseIngredients },
         meat: { ingredients: meatIngredients },

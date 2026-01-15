@@ -1,4 +1,4 @@
-import type { Recipe, RecipeResponse } from "../types/recipe";
+import type { RecipeResponse } from "../types/recipe";
 import { RecipeResponseSchema } from "../types/recipe";
 
 const API_BASE_URL =
@@ -43,35 +43,17 @@ export async function fetchRecipe(
   name: string,
   servings: number
 ): Promise<RecipeResponse> {
-  // 🔒 Hard guard — do NOT allow swapped args through
   if (typeof name !== "string" || !name.trim()) {
-    throw new Error(
-      `fetchRecipe(name, servings): invalid name argument (${String(name)})`
-    );
+    throw new Error(`Invalid name argument: ${String(name)}`);
   }
 
   if (typeof servings !== "number" || Number.isNaN(servings)) {
-    throw new Error(
-      `fetchRecipe(name, servings): invalid servings argument (${String(
-        servings
-      )})`
-    );
+    throw new Error(`Invalid servings argument: ${String(servings)}`);
   }
 
-  const base = API_BASE_URL || "";
-
   try {
-    return await requestRecipe(base, name.trim(), servings);
+    return await requestRecipe(name.trim(), servings);
   } catch (error) {
-    // Same-origin fallback ONLY if base URL was used
-    if (base && typeof window !== "undefined") {
-      try {
-        return await requestRecipe("", name.trim(), servings);
-      } catch (fallbackError) {
-        throw normalizeError(fallbackError);
-      }
-    }
-
     throw normalizeError(error);
   }
 }

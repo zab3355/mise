@@ -1,5 +1,5 @@
 import { SampleProvider } from "./sample.provider";
-import { ProviderName, RecipeProvider } from "./types";
+import { RecipeProvider } from "./types";
 
 import { GroqProvider } from "./groq.provider";
 
