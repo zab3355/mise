@@ -1,7 +1,7 @@
 FROM node:20 AS builder
 WORKDIR /app
 
-ARG VITE_API_BASE_URL=http://api:3002
+ARG VITE_API_BASE_URL=""
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
 COPY package.json yarn.lock tsconfig.json tsconfig.app.json tsconfig.node.json vite.config.ts eslint.config.js index.html ./
