@@ -1,0 +1,27 @@
+
+services:
+  api:
+    build:
+      context: ./server
+    env_file:
+      - ./server/.env
+    environment:
+      - PORT=3001
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GROQ_MODEL=${GROQ_MODEL}
+    ports:
+      - "3001:3001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  web:
+    build:
+      context: ./src
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "4173:80"
