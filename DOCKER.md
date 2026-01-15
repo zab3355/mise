@@ -4,16 +4,19 @@
 
 1. **Stop local dev servers** (if running):
 ```bash
-# Stop the npm run dev processes
-# Press Ctrl+C in both terminal windows
+# Stop the npm run dev processes (Ctrl+C in both terminals)
 ```
 
-2. **Set environment variables**:
+2. **Create server/.env with your API keys**:
 ```bash
-# Make sure server/.env exists with your API keys
-echo "GROQ_API_KEY=your_key_here" > server/.env
-echo "GROQ_MODEL=llama-3.1-8b-instant" >> server/.env
+# Edit server/.env and add your actual keys
+PORT=3002
+GROQ_API_KEY=your_actual_groq_key_here
+GROQ_MODEL=llama-3.1-8b-instant
+UNSPLASH_ACCESS_KEY=your_unsplash_key_here
 ```
+
+**Important**: The `.env` file must exist in `server/.env` with real API keys.
 
 3. **Build and run**:
 ```bash
@@ -22,7 +25,7 @@ docker compose up --build
 
 4. **Access the application**:
 - Web UI: http://localhost:4173
-- API: http://localhost:3001
+- API: http://localhost:3002
 
 ## Common Issues
 
