@@ -1,6 +1,6 @@
 # mise.
 
-A modern recipe generation application powered by Groq's LLM API. Enter any dish name, select servings, and get a detailed recipe with multiple variants (base, meat, vegan, gluten-free), complete with scaled ingredients and step-by-step instructions.
+A modern recipe generation application powered by Groq's LLM API. Enter any dish name, select servings, and get a detailed recipe with multiple variants (base, meat, vegan, gluten-free).
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react" alt="React" />
