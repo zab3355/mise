@@ -122,7 +122,9 @@ jobs:
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
         run: |
-          ssh "$DEPLOY_USER@$DEPLOY_HOST" <<'EOF'
+          # Retry SSH deployment with backoff for transient DNS failures
+          for attempt in 1 2 3; do
+            if ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no "$DEPLOY_USER@$DEPLOY_HOST" <<'EOF'
           set -euo pipefail
           cd /home/zabrown/projects/mise
           git pull --ff-only origin main
@@ -132,3 +134,15 @@ jobs:
           curl -fsS http://127.0.0.1:4173/ || true
           curl -fsS http://127.0.0.1:3002/health || true
           EOF
+            then
+              echo "Deployment successful"
+              exit 0
+            fi
+            if [ $attempt -lt 3 ]; then
+              echo "Deployment attempt $attempt/3 failed, retrying in 5 seconds..."
+              sleep 5
+            else
+              echo "Deployment failed after 3 attempts"
+              exit 1
+            fi
+          done
