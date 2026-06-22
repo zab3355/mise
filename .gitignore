@@ -8,3 +8,8 @@ server/dist
 src/dist
 .
 .DS_Store
+.env.*
+*.key
+*.pem
+secrets/
+deploy_key*

@@ -1,5 +1,7 @@
 # mise.
 
+[![CI/CD](https://github.com/zab3355/mise/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/zab3355/mise/actions/workflows/ci-cd.yml)
+
 A modern recipe generation application powered by Groq's LLM API. Enter any dish name, select servings, and get a detailed recipe with multiple variants (base, meat, vegan, gluten-free).
 
 <p align="center">
@@ -333,5 +335,25 @@ Edit `src/src/theme.ts` to change colors, typography, and component overrides.
 - [Unsplash](https://unsplash.com) for beautiful food photography
 - [Material-UI](https://mui.com) for the component library
 - [Vite](https://vitejs.dev) for the lightning-fast dev experience
+
+---
+
+## CI/CD Pipeline
+
+This project validates on every push and pull request, and deploys to production on `main` push after validation passes.
+
+### Checks
+
+- **Frontend Build**: Build React app with Vite
+- **Frontend Lint**: ESLint code quality checks
+- **Backend Build**: Build Express.js TypeScript server
+- **Backend Lint**: TypeScript validation
+- **Deploy**: Automatic deployment to server on `main` push
+
+### Manual Trigger
+
+You can manually run checks without pushing by going to [GitHub Actions](https://github.com/zab3355/mise/actions/workflows/ci-cd.yml) and clicking "Run workflow".
+
+For details, see the [CI/CD Deployment Guide](../../CI-CD-DEPLOYMENT.md).
 
 ---
