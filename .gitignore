@@ -1,0 +1,15 @@
+node_modules
+*.log
+.env
+.env
+server/.env
+src/.env
+server/dist
+src/dist
+.
+.DS_Store
+.env.*
+*.key
+*.pem
+secrets/
+deploy_key*
