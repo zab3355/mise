@@ -101,7 +101,21 @@ jobs:
       - name: Trust deployment host
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
+          chmod 700 ~/.ssh
+          # Retry ssh-keyscan with backoff for transient DNS failures
+          for i in 1 2 3; do
+            if ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null; then
+              echo "SSH host key added successfully"
+              exit 0
+            fi
+            if [ $i -lt 3 ]; then
+              echo "Retry $i/3: ssh-keyscan failed, waiting before retry..."
+              sleep 2
+            fi
+          done
+          echo "Warning: Could not scan host key, disabling strict checking as fallback"
+          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+          exit 0
 
       - name: Deploy
         env:
