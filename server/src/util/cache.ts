@@ -25,8 +25,16 @@ export class TTLCache<T> {
     this.store.set(key, { value, expiresAt });
   }
 
-  async getOrSet(key: string, factory: () => Promise<T>, ttlMs?: number): Promise<{ value: T; fromCache: boolean }>
-  async getOrSet(key: string, factory: () => T, ttlMs?: number): Promise<{ value: T; fromCache: boolean }>
+  async getOrSet(
+    key: string,
+    factory: () => Promise<T>,
+    ttlMs?: number
+  ): Promise<{ value: T; fromCache: boolean }>;
+  async getOrSet(
+    key: string,
+    factory: () => T,
+    ttlMs?: number
+  ): Promise<{ value: T; fromCache: boolean }>;
   async getOrSet(key: string, factory: () => T | Promise<T>, ttlMs?: number) {
     const existing = this.get(key);
     if (existing !== undefined) {
